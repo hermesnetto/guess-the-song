@@ -5,9 +5,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <div>
-      Guess the song
-    </div>
+    <div>Guess the song|</div>
   </React.StrictMode>,
   document.getElementById('root')
 );
