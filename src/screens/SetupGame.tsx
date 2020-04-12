@@ -5,22 +5,39 @@ import Brand from '../components/Brand';
 import Button from '../components/Button';
 import OptionsSelector from '../components/OptionsSelector';
 import optionsReducer, { Action } from '../state/options/reducer';
+import useProtectedRouter from '../custom-hooks/useProtectedRouter';
+import useSpotifyToken from '../custom-hooks/useSpotifyToken';
+import { GENRES } from '../constants';
 
 const SetupGameScreen: React.FC = () => {
   const [genres, dispatchGenres] = useReducer(optionsReducer, { items: [] });
   const [difficulties, dispatchDifficulties] = useReducer(optionsReducer, { items: [] });
+  const [token] = useSpotifyToken();
+
+  useProtectedRouter();
 
   useEffect(() => {
+    // fetch('https://api.spotify.com/v1/recommendations/available-genre-seeds', {
+    //   method: 'GET',
+    //   headers: new Headers({
+    //     Authorization: `Bearer ${token || ''}`,
+    //     'Content-Type': 'application/json',
+    //   }),
+    // })
+    //   .then(r => r.json())
+    //   .then(r => console.table(r.genres));
+
+    /**
+     * @TODO Allow selecting at max 3 genres
+     */
     dispatchGenres({
       type: 'options/SET-ITEMS',
       payload: {
-        items: [
-          { id: 'abc1', title: 'Pop', selected: false },
-          { id: 'abc2', title: 'Rock', selected: true },
-          { id: 'abc3', title: 'Rap', selected: true },
-          { id: 'abc4', title: 'Dance', selected: false },
-          { id: 'abc5', title: 'Reggae', selected: false },
-        ],
+        items: GENRES.map((g: string) => ({
+          id: g,
+          title: g,
+          selected: false,
+        })),
       },
     });
 
@@ -28,13 +45,13 @@ const SetupGameScreen: React.FC = () => {
       type: 'options/SET-ITEMS',
       payload: {
         items: [
-          { id: 'dif1', title: 'Easy', selected: false },
-          { id: 'dif2', title: 'Medium', selected: true },
-          { id: 'dif3', title: 'Hard', selected: false },
+          { id: 'easy', title: 'Easy', selected: false },
+          { id: 'medium', title: 'Medium', selected: true },
+          { id: 'hard', title: 'Hard', selected: false },
         ],
       },
     });
-  }, []);
+  }, [token]);
 
   const handleToggleItem = (dispatch: Dispatch<Action>) => (id: string, multiple?: boolean) => {
     dispatch({

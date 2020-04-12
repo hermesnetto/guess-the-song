@@ -27,10 +27,13 @@ const HomeScreen: React.FC = () => {
 
       history.push('/setup-game');
     }
-  }, []);
+  }, [history, saveToken]);
 
   const spotifySignIn = () => {
     if (!token && !readToken()) {
+      /**
+       * @TODO Validate expired tokens
+       */
       window.location.href = `${spotifyAuthEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
         '%20'
       )}&response_type=token&show_dialog=true`;

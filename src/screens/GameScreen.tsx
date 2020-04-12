@@ -4,10 +4,13 @@ import Brand from '../components/Brand';
 import OptionsSelector from '../components/OptionsSelector';
 import optionsReducer from '../state/options/reducer';
 import styled from 'styled-components';
+import useProtectedRouter from '../custom-hooks/useProtectedRouter';
 
 const GameScreen: React.FC = () => {
   const [genres, dispatch] = useReducer(optionsReducer, { items: [] });
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+
+  useProtectedRouter();
 
   useEffect(() => {
     window.setTimeout(() => {
