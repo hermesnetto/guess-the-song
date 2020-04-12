@@ -1,15 +1,15 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 
-import App from '../App';
+import Brand from './';
 
-describe('<App />', () => {
+describe('<Brand />', () => {
   it('should match snapshot', () => {
-    const {container} = render(<App />);
+    const {container} = render(<Brand />);
     expect(container.firstChild).toMatchInlineSnapshot(`
-      <div>
+      <h1>
         Guess the song
-      </div>
+      </h1>
     `);
   });
 });

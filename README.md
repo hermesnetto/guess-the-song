@@ -10,3 +10,4 @@ Simple guessing game where you need to guess the name of the playing song.
 - [ ] Build the level selection page
 - [ ] Build the song page
 - [ ] Build the score page
+- [ ] Convert it into a PWA with offline playing
