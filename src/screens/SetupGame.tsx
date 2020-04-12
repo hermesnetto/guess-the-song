@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, Dispatch } from 'react';
+import { Link } from 'react-router-dom';
 
 import Brand from '../components/Brand';
 import Button from '../components/Button';
@@ -56,7 +57,9 @@ const SetupGameScreen: React.FC = () => {
         toggleItem={handleToggleItem(dispatchDifficulties)}
         options={difficulties.items}
       />
-      <Button>Start Game</Button>
+      <Button as={Link} to="/game">
+        Start Game
+      </Button>
     </>
   );
 };

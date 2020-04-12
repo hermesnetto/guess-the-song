@@ -12,6 +12,8 @@ interface ButtonProps {
 const Button = styled.button<ButtonProps>`
   border-style: solid;
   border-width: 2px;
+  text-decoration: none;
+  text-align: center;
 
   ${props => {
     switch (props.style) {

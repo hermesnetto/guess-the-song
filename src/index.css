@@ -21,3 +21,7 @@ code {
 button {
   font-family: 'Special Elite', cursive;
 }
+
+audio {
+  width: 100%;
+}

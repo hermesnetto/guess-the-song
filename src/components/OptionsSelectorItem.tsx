@@ -6,10 +6,12 @@ import { OptionSelector } from '../types';
 interface OptionsSelectorItemProps extends OptionSelector {
   toggleItem: (id: string, multiple?: boolean) => void;
   multiple?: boolean;
+  fullWidth?: boolean;
 }
 
 interface ItemProps {
   selected: boolean;
+  fullWidth?: boolean;
 }
 
 const OptionsSelectorItem: React.FC<OptionsSelectorItemProps> = ({
@@ -18,11 +20,12 @@ const OptionsSelectorItem: React.FC<OptionsSelectorItemProps> = ({
   selected,
   toggleItem,
   multiple,
+  fullWidth,
 }) => {
   const handleClick = () => toggleItem(id, multiple);
 
   return (
-    <Item selected={selected} onClick={handleClick}>
+    <Item selected={selected} fullWidth={fullWidth} onClick={handleClick}>
       {title}
     </Item>
   );
@@ -33,6 +36,12 @@ const Item = styled.button<ItemProps>`
   margin: 5px;
   font-size: 16px;
   border: 0;
+
+  ${props =>
+    props.fullWidth &&
+    css`
+      width: 100%;
+    `}
 
   ${props =>
     props.selected &&

@@ -9,6 +9,7 @@ interface OptionsSelectorProps {
   title: string;
   options: OptionSelector[];
   multiple?: boolean;
+  fullWidth?: boolean;
   toggleItem: (id: string, multiple?: boolean) => void;
 }
 
@@ -17,6 +18,7 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   options,
   toggleItem,
   multiple,
+  fullWidth,
 }) => {
   return (
     <Wrapper>
@@ -27,6 +29,7 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
             key={option.id}
             multiple={multiple}
             toggleItem={toggleItem}
+            fullWidth={fullWidth}
             {...option}
           />
         ))}
@@ -37,6 +40,7 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
 
 OptionsSelector.defaultProps = {
   multiple: false,
+  fullWidth: false,
 };
 
 const Wrapper = styled.div`
