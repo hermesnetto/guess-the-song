@@ -1,4 +1,4 @@
-import {DefaultTheme} from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 
 const variables = {
   platinum: '#D9E4E5',
@@ -11,8 +11,17 @@ const variables = {
 
 const theme: DefaultTheme = {
   colors: {
+    platinum: variables.platinum,
+    middleBlue: variables.middleBlue,
+    mediumAquamarine: variables.mediumAquamarine,
+    chineseViolet: variables.chineseViolet,
+    darkSlateGray: variables.darkSlateGray,
+    sunny: variables.sunny,
+
     background: variables.darkSlateGray,
     title: variables.sunny,
+    subtitle: variables.platinum,
+
     primaryButtonBg: variables.mediumAquamarine,
     primaryButtonColor: variables.darkSlateGray,
     secondaryButtonBg: variables.platinum,

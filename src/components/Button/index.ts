@@ -1,5 +1,4 @@
-import styled, {css} from 'styled-components';
-import variables from '../../themes/variables';
+import styled, { css } from 'styled-components';
 
 /**
  * @TODO Check type props not workign

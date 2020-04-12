@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import styled, {ThemeProvider} from 'styled-components';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
 
 import theme from './theme';
 import HomeScreen from './screens/Home';
@@ -34,12 +34,8 @@ const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 0 30px;
-`;
-
-const ToggleThemeButton = styled.button`
-  position: fixed;
-  top: 20px;
-  right: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 export default App;
