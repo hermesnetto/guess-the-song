@@ -11,7 +11,7 @@ const Brand: React.FC<BrandProps> = ({ small }) => {
 
 const SBrand = styled.h1<BrandProps>`
   color: ${props => props.theme.colors.title};
-  font-size: ${props => (props.small ? '42px' : '82px')};
+  font-size: ${props => (props.small ? '32px' : '82px')};
   font-weight: bold;
   margin-top: 80px;
 

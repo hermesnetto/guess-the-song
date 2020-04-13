@@ -5,7 +5,7 @@ import Brand from '../components/Brand';
 import Button from '../components/Button';
 import OptionsSelector from '../components/OptionsSelector';
 import optionsReducer, { Action } from '../state/options/reducer';
-import useProtectedRouter from '../custom-hooks/useProtectedRouter';
+// import useProtectedRouter from '../custom-hooks/useProtectedRouter';
 import useSpotifyToken from '../custom-hooks/useSpotifyToken';
 import { GENRES } from '../constants';
 
@@ -14,19 +14,9 @@ const SetupGameScreen: React.FC = () => {
   const [difficulties, dispatchDifficulties] = useReducer(optionsReducer, { items: [] });
   const [token] = useSpotifyToken();
 
-  useProtectedRouter();
+  // useProtectedRouter();
 
   useEffect(() => {
-    // fetch('https://api.spotify.com/v1/recommendations/available-genre-seeds', {
-    //   method: 'GET',
-    //   headers: new Headers({
-    //     Authorization: `Bearer ${token || ''}`,
-    //     'Content-Type': 'application/json',
-    //   }),
-    // })
-    //   .then(r => r.json())
-    //   .then(r => console.table(r.genres));
-
     /**
      * @TODO Allow selecting at max 3 genres
      */

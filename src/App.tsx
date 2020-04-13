@@ -4,8 +4,8 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import theme from './theme';
 import HomeScreen from './screens/Home';
-import SetupGameScreen from './screens/SetupGame';
-import GameScreen from './screens/GameScreen';
+import SetupGameScreen from './screens/Setup';
+import GameScreen from './screens/Game';
 
 const App: React.FC = () => {
   return (

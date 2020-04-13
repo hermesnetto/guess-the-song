@@ -3,3 +3,11 @@ export interface OptionSelector {
   title: string;
   selected: boolean;
 }
+
+export interface Track {
+  id: string;
+  artists: {
+    name: string;
+  }[];
+  name: string;
+}
