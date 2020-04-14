@@ -31,9 +31,9 @@ const SetupScreen: React.FC = () => {
 
     dispatchDifficulties(
       setItemsAction([
-        { id: 'easy', title: 'Easy', selected: false },
-        { id: 'medium', title: 'Medium', selected: true },
-        { id: 'hard', title: 'Hard', selected: false },
+        { id: '15', title: 'Easy', selected: false },
+        { id: '10', title: 'Medium', selected: true },
+        { id: '5', title: 'Hard', selected: false },
       ])
     );
   }, [token]);

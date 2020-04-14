@@ -11,14 +11,14 @@ export type GameStates = 'INIT' | 'SETTING_UP' | 'PLAYING';
 
 export interface State {
   genres: string[];
-  difficulty: string | null;
+  difficulty: string;
   gameState: GameStates;
   points: number;
 }
 
 export const initialState: State = {
   genres: [],
-  difficulty: null,
+  difficulty: '15',
   gameState: 'INIT',
   points: 0,
 };

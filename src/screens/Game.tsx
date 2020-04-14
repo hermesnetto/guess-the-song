@@ -10,8 +10,6 @@ import PageTitle from '../components/PageTitle';
 import PlayerAnimation from '../components/PlayerAnimation';
 import useFetchTracks from '../custom-hooks/useFetchTracks';
 
-const playerDuration = 15;
-
 const GameScreen: React.FC = () => {
   const { state } = useContext(StoreContext);
   const { token } = useSpotifyToken();
@@ -22,7 +20,7 @@ const GameScreen: React.FC = () => {
       <PageTitle right={`Pts: ${state.points}`}>Playing</PageTitle>
       {selected.id && (
         <Song>
-          <AudioPlayer src={selected.preview_url} total={playerDuration} />
+          <AudioPlayer src={selected.preview_url} total={parseInt(state.difficulty, 10)} />
         </Song>
       )}
       <PlayerAnimation />
