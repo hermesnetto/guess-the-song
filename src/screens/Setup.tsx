@@ -1,62 +1,63 @@
-import React, { useReducer, useEffect, Dispatch } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useReducer, useEffect, Dispatch, useContext } from 'react';
 
-import Brand from '../components/Brand';
 import Button from '../components/Button';
 import OptionsSelector from '../components/OptionsSelector';
-import optionsReducer, { Action } from '../state/options/reducer';
-// import useProtectedRouter from '../custom-hooks/useProtectedRouter';
+import optionsReducer, { Action, setItemsAction, toggleItemAction } from '../store/reducer/options';
 import useSpotifyToken from '../custom-hooks/useSpotifyToken';
 import { GENRES } from '../constants';
+import { setGenresAction, setDifficultyAction, switchGameStateAction } from '../store/global';
+import { StoreContext } from '../store';
+import { OptionSelector } from '../types';
 
-const SetupGameScreen: React.FC = () => {
+const SetupScreen: React.FC = () => {
+  const { dispatch } = useContext(StoreContext);
   const [genres, dispatchGenres] = useReducer(optionsReducer, { items: [] });
   const [difficulties, dispatchDifficulties] = useReducer(optionsReducer, { items: [] });
-  const [token] = useSpotifyToken();
-
-  // useProtectedRouter();
+  const { token } = useSpotifyToken();
 
   useEffect(() => {
     /**
      * @TODO Allow selecting at max 3 genres
      */
-    dispatchGenres({
-      type: 'options/SET-ITEMS',
-      payload: {
-        items: GENRES.map((g: string) => ({
+    dispatchGenres(
+      setItemsAction(
+        GENRES.map((g: string) => ({
           id: g,
           title: g,
           selected: false,
-        })),
-      },
-    });
+        }))
+      )
+    );
 
-    dispatchDifficulties({
-      type: 'options/SET-ITEMS',
-      payload: {
-        items: [
-          { id: 'easy', title: 'Easy', selected: false },
-          { id: 'medium', title: 'Medium', selected: true },
-          { id: 'hard', title: 'Hard', selected: false },
-        ],
-      },
-    });
+    dispatchDifficulties(
+      setItemsAction([
+        { id: 'easy', title: 'Easy', selected: false },
+        { id: 'medium', title: 'Medium', selected: true },
+        { id: 'hard', title: 'Hard', selected: false },
+      ])
+    );
   }, [token]);
 
   const handleToggleItem = (dispatch: Dispatch<Action>) => (id: string, multiple?: boolean) => {
-    dispatch({
-      type: 'options/TOGGLE-ITEM',
-      payload: { id, multiple },
-    });
+    dispatch(toggleItemAction(id, multiple));
+  };
+
+  const handleStartGame = () => {
+    dispatch(setGenresAction(genres.items.filter((g: OptionSelector) => g.selected)));
+    dispatch(
+      setDifficultyAction(difficulties.items.filter((d: OptionSelector) => d.selected)[0].id)
+    );
+
+    dispatch(switchGameStateAction('PLAYING'));
   };
 
   return (
     <>
-      <Brand small />
       <OptionsSelector
         title="Select the genres you want to guess"
         options={genres.items}
         toggleItem={handleToggleItem(dispatchGenres)}
+        limit={3}
         multiple
       />
       <OptionsSelector
@@ -64,11 +65,9 @@ const SetupGameScreen: React.FC = () => {
         toggleItem={handleToggleItem(dispatchDifficulties)}
         options={difficulties.items}
       />
-      <Button as={Link} to="/game">
-        Start Game
-      </Button>
+      <Button onClick={handleStartGame}>Start Game</Button>
     </>
   );
 };
 
-export default SetupGameScreen;
+export default SetupScreen;

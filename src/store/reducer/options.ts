@@ -1,5 +1,7 @@
 import { OptionSelector } from '../../types';
-import { SET_ITEMS, TOGGLE_ITEM } from './types';
+
+export const SET_ITEMS = 'options/SET-ITEMS';
+export const TOGGLE_ITEM = 'options/TOGGLE-ITEM';
 
 interface State {
   items: OptionSelector[];
@@ -60,6 +62,25 @@ function optionsReducer(state: State, action: Action) {
   }
 
   return state;
+}
+
+export function setItemsAction(items: OptionSelector[]): SetItemsAction {
+  return {
+    type: SET_ITEMS,
+    payload: {
+      items,
+    },
+  };
+}
+
+export function toggleItemAction(id: string, multiple?: boolean): ToggleItemAction {
+  return {
+    type: TOGGLE_ITEM,
+    payload: {
+      id,
+      multiple,
+    },
+  };
 }
 
 export default optionsReducer;

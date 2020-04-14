@@ -33,39 +33,25 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, total }) => {
   }, [total]);
 
   return (
-    <div>
-      <Title>
-        <span role="img" aria-label="radio">
-          📻
-        </span>{' '}
-        Playing song...
-      </Title>
-      <Wrapper>
-        <ProgressBar>
-          <ProgressBarLine style={{ width: `${(played / total) * 100}%` }} />
-        </ProgressBar>
-        <audio src={src} ref={audioEl} autoPlay></audio>
-      </Wrapper>
-    </div>
+    <>
+      <ProgressBar>
+        <ProgressBarLine style={{ width: `${(played / total) * 100}%` }} />
+      </ProgressBar>
+      <audio src={src} ref={audioEl} autoPlay></audio>
+    </>
   );
 };
 
-const Wrapper = styled.div`
-  background: ${props => props.theme.colors.chineseViolet};
-  padding: 10px;
-`;
-
-const Title = styled.h3`
-  color: ${props => props.theme.colors.platinum};
-`;
-
 const ProgressBar = styled.div`
-  height: 12px;
-  background: ${props => props.theme.colors.background};
+  height: 15px;
+  background: #ccc;
+  border: 1px solid #444;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const ProgressBarLine = styled.div`
-  background: ${props => props.theme.colors.platinum};
+  background: ${props => props.theme.colors.title};
   height: 100%;
 `;
 

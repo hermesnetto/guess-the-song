@@ -5,7 +5,7 @@ interface UseSpotifyTokenActions {
   saveToken: (token: string) => void;
 }
 
-const useSpotifyToken = (): [string | null, UseSpotifyTokenActions] => {
+const useSpotifyToken = (): { token: string | null; actions: UseSpotifyTokenActions } => {
   const [token, setToken] = useState<string>('');
   const key = 'gts-spotify-token';
 
@@ -25,7 +25,7 @@ const useSpotifyToken = (): [string | null, UseSpotifyTokenActions] => {
     setToken(token);
   };
 
-  return [token, { readToken, saveToken }];
+  return { token, actions: { readToken, saveToken } };
 };
 
 export default useSpotifyToken;

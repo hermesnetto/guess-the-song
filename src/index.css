@@ -5,11 +5,11 @@
 body,
 html {
   width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: 'Special Elite', cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,9 +19,18 @@ code {
 }
 
 button {
-  font-family: 'Special Elite', cursive;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 audio {
   width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+audio {
+  margin-bottom: 0;
 }

@@ -4,7 +4,10 @@ import { useHistory } from 'react-router-dom';
 import useSpotifyToken from './useSpotifyToken';
 
 const useProtectedRouter = () => {
-  const [token, { readToken }] = useSpotifyToken();
+  const {
+    token,
+    actions: { readToken },
+  } = useSpotifyToken();
   const history = useHistory();
 
   useEffect(() => {

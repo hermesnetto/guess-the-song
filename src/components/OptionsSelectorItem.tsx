@@ -7,6 +7,8 @@ interface OptionsSelectorItemProps extends OptionSelector {
   toggleItem: (id: string, multiple?: boolean) => void;
   multiple?: boolean;
   fullWidth?: boolean;
+  limit?: number;
+  totalSelected: number;
 }
 
 interface ItemProps {
@@ -21,8 +23,20 @@ const OptionsSelectorItem: React.FC<OptionsSelectorItemProps> = ({
   toggleItem,
   multiple,
   fullWidth,
+  limit,
+  totalSelected,
 }) => {
-  const handleClick = () => toggleItem(id, multiple);
+  const handleClick = () => {
+    if (!selected) {
+      if (!limit) {
+        toggleItem(id, multiple);
+      } else if (limit && totalSelected < limit) {
+        toggleItem(id, multiple);
+      }
+    } else {
+      toggleItem(id, multiple);
+    }
+  };
 
   return (
     <Item selected={selected} fullWidth={fullWidth} onClick={handleClick}>
@@ -34,8 +48,9 @@ const OptionsSelectorItem: React.FC<OptionsSelectorItemProps> = ({
 const Item = styled.button<ItemProps>`
   padding: 10px;
   margin: 5px;
-  font-size: 16px;
+  font-size: 20px;
   border: 0;
+  border-radius: 5px;
 
   ${props =>
     props.fullWidth &&
@@ -46,16 +61,16 @@ const Item = styled.button<ItemProps>`
   ${props =>
     props.selected &&
     css`
-      background: ${props.theme.colors.mediumAquamarine};
-      color: ${props.theme.colors.background};
+      background: #3f96e4;
+      color: #fff;
       font-weight: bold;
     `}
 
   ${props =>
     !props.selected &&
     css`
-      border: 1px solid ${props.theme.colors.mediumAquamarine};
-      color: ${props.theme.colors.mediumAquamarine};
+      border: 1px solid #333;
+      color: #333;
       background: transparent;
     `}
 `;

@@ -1,29 +1,32 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useContext, useState, useReducer, useEffect } from 'react';
 
-import Brand from '../components/Brand';
-import OptionsSelector from '../components/OptionsSelector';
+import Button from '../components/Button';
 import AudioPlayer from '../components/AudioPlayer';
-import optionsReducer from '../state/options/reducer';
+import optionsReducer, { setItemsAction } from '../store/reducer/options';
 import styled from 'styled-components';
 import useSpotifyToken from '../custom-hooks/useSpotifyToken';
+import { StoreContext } from '../store';
 import { getRandomInt, convertTrackIntoOption } from '../utils';
+import { OptionSelector } from '../types';
+import TrackSelector from '../components/TrackSelector';
+import PageTitle from '../components/PageTitle';
 
 const playerDuration = 15;
 
 const GameScreen: React.FC = () => {
+  const { state } = useContext(StoreContext);
   const [songs, dispatch] = useReducer(optionsReducer, { items: [] });
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [song, setSong] = useState<string>('');
 
-  const [token] = useSpotifyToken();
-
-  // useProtectedRouter();
+  const { token } = useSpotifyToken();
 
   useEffect(() => {
     // Wait for the token to be retrieved
+    const genres = state.genres.map((g: OptionSelector) => g.id).join(',');
+
     if (token) {
       fetch(
-        `https://api.spotify.com/v1/recommendations?limit=4&seed_genres=rockabilly%2Cpsychobilly&min_popularity=60&max_popularity=100&target_popularity=100`,
+        `https://api.spotify.com/v1/recommendations?limit=4&seed_genres=${genres}%2Cpsychobilly&min_popularity=60&max_popularity=100&target_popularity=100`,
         {
           method: 'GET',
           headers: new Headers({
@@ -34,29 +37,15 @@ const GameScreen: React.FC = () => {
       )
         .then(response => response.json())
         .then(response => {
-          dispatch({
-            type: 'options/SET-ITEMS',
-            payload: {
-              items: convertTrackIntoOption(response),
-            },
-          });
-
+          dispatch(setItemsAction(convertTrackIntoOption(response)));
           setSong(response.tracks[getRandomInt(1, 4)].preview_url);
-          window.setTimeout(() => setIsPlaying(false), playerDuration * 1000);
         });
     }
-  }, [token]);
-
-  const handleToggleItem = (id: string, multiple?: boolean) => {
-    dispatch({
-      type: 'options/TOGGLE-ITEM',
-      payload: { id, multiple },
-    });
-  };
+  }, [token, state.genres]);
 
   return (
     <>
-      <Brand small />
+      <PageTitle right="Pts: 1">Playing</PageTitle>
 
       {song && (
         <Song>
@@ -64,20 +53,14 @@ const GameScreen: React.FC = () => {
         </Song>
       )}
 
-      {!isPlaying && (
-        <OptionsSelector
-          title="Which song has just played?"
-          options={songs.items}
-          toggleItem={handleToggleItem}
-          fullWidth
-        />
-      )}
+      <TrackSelector tracks={songs.items} track="" />
+      <Button themeStyle="secondary">Reiniciar</Button>
     </>
   );
 };
 
 const Song = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 `;
 
 export default GameScreen;

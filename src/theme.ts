@@ -20,7 +20,7 @@ const theme: DefaultTheme = {
 
     background: variables.darkSlateGray,
     title: variables.sunny,
-    subtitle: variables.platinum,
+    subtitle: variables.darkSlateGray,
 
     primaryButtonBg: variables.mediumAquamarine,
     primaryButtonColor: variables.darkSlateGray,

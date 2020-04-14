@@ -10,6 +10,7 @@ interface OptionsSelectorProps {
   options: OptionSelector[];
   multiple?: boolean;
   fullWidth?: boolean;
+  limit?: number;
   toggleItem: (id: string, multiple?: boolean) => void;
 }
 
@@ -19,7 +20,10 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   toggleItem,
   multiple,
   fullWidth,
+  limit,
 }) => {
+  const totalSelected = options.filter((item: OptionSelector) => item.selected).length;
+
   return (
     <Wrapper>
       <PageTitle>{title}</PageTitle>
@@ -30,6 +34,8 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
             multiple={multiple}
             toggleItem={toggleItem}
             fullWidth={fullWidth}
+            limit={limit}
+            totalSelected={totalSelected}
             {...option}
           />
         ))}

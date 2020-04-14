@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useContext } from 'react';
 
-import Brand from '../components/Brand';
 import Button from '../components/Button';
 import useSpotifyToken from '../custom-hooks/useSpotifyToken';
+import { switchGameStateAction } from '../store/global';
+import { StoreContext } from '../store';
 
 const spotifyAuthEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = 'd9d505e880594b7ca174cf7feeb525ea';
@@ -11,8 +11,12 @@ const redirectUri = 'http://localhost:3000/';
 const scopes = ['user-top-read'];
 
 const HomeScreen: React.FC = () => {
-  const [token, { readToken, saveToken }] = useSpotifyToken();
-  const history = useHistory();
+  const { dispatch } = useContext(StoreContext);
+
+  const {
+    token,
+    actions: { readToken, saveToken },
+  } = useSpotifyToken();
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -25,9 +29,9 @@ const HomeScreen: React.FC = () => {
           .split('=')[1]
       );
 
-      history.push('/setup-game');
+      dispatch(switchGameStateAction('SETTING_UP'));
     }
-  }, [history, saveToken]);
+  }, [dispatch, saveToken]);
 
   const spotifySignIn = () => {
     if (!token && !readToken()) {
@@ -38,13 +42,12 @@ const HomeScreen: React.FC = () => {
         '%20'
       )}&response_type=token&show_dialog=true`;
     } else {
-      history.push('/setup-game');
+      dispatch(switchGameStateAction('SETTING_UP'));
     }
   };
 
   return (
     <>
-      <Brand />
       <Button size="lg" onClick={spotifySignIn} block>
         Start Game
       </Button>

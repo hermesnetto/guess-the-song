@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
  * @TODO Check type props not workign
  */
 interface ButtonProps {
-  style?: 'primary' | 'secondary';
+  themeStyle?: 'primary' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
   block?: boolean;
 }
@@ -14,26 +14,21 @@ const Button = styled.button<ButtonProps>`
   border-width: 2px;
   text-decoration: none;
   text-align: center;
+  border-radius:5px;
 
   ${props => {
-    switch (props.style) {
+    switch (props.themeStyle) {
       case 'secondary':
         return css`
           background: ${props.theme.colors.secondaryButtonBg};
           color: ${props.theme.colors.secondaryButtonColor};
           border-color: ${props.theme.colors.secondaryButtonColor};
         `;
-      case 'danger':
-        return css`
-          background: red;
-          color: #fff;
-          border-color: #fff;
-        `;
       default:
         return css`
-          background: ${props.theme.colors.primaryButtonBg};
-          color: ${props.theme.colors.primaryButtonColor};
-          border-color: ${props.theme.colors.primaryButtonColor};
+          background: #38c172;
+          color: #fff;
+          border-color: #399e64;
         `;
     }
   }}
@@ -53,7 +48,7 @@ const Button = styled.button<ButtonProps>`
         `;
       default:
         return css`
-          font-size: 18px;
+          font-size: 20px;
           padding: 12px 20px;
         `;
     }
