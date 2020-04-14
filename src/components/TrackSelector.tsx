@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 
 import { OptionSelector } from '../types';
 
@@ -8,9 +8,17 @@ interface TrackSelectorProps {
   track: string;
 }
 
-const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks }) => {
+const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks, track }) => {
+  const [isChoosen, setIsChoosen] = useState<boolean>(false);
+  const [choosenId, setChoosenId] = useState<string>('');
+
+  const handleClick = (trackId: string) => {
+    setIsChoosen(true);
+    setChoosenId(trackId);
+  };
+
   return (
-    <div>
+    <>
       <lottie-player
         src="https://assets8.lottiefiles.com/packages/lf20_CyEC2p.json"
         background="#38c172"
@@ -20,13 +28,27 @@ const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks }) => {
         autoplay
       />
       <StyledList>
-        {tracks.map(track => (
-          <StyledItem>
-            <StyledOption>{track.title}</StyledOption>
-          </StyledItem>
-        ))}
+        {tracks.map(({ id, title }) => {
+          const success = isChoosen && id === choosenId && choosenId === track;
+          const error = isChoosen && id === choosenId && choosenId !== track;
+          const played = isChoosen && id !== choosenId && id === track;
+
+          return (
+            <StyledItem>
+              <StyledOption
+                success={success}
+                error={error}
+                played={played}
+                onClick={() => handleClick(id)}
+                key={`track_${id}`}
+              >
+                {title}
+              </StyledOption>
+            </StyledItem>
+          );
+        })}
       </StyledList>
-    </div>
+    </>
   );
 };
 
@@ -51,25 +73,25 @@ const StyledOption = styled.button<{ success?: boolean; error?: boolean; played?
   border-radius: 5px;
   color: #fff;
   font-family: sans-serif;
-  background: ${props => {
-    if (props.success) {
-      return '#38c172';
-    }
+  background: #3f96e4;
 
-    if (props.error) {
-      return 'red';
-    }
+  ${props =>
+    props.success &&
+    css`
+      background: #38c172;
+    `}
+  
+  ${props =>
+    props.error &&
+    css`
+      background: red;
+    `}
 
-    if (props.played) {
-      return '#cdcdcd';
-    }
-
-    return '#3f96e4';
-  }};
-
-  &:hover {
-    background: #206baf;
-  }
+  ${props =>
+    props.played &&
+    css`
+      background: #38c172;
+    `}
 `;
 
 export default TrackSelector;

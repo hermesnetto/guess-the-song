@@ -16,7 +16,10 @@ const playerDuration = 15;
 const GameScreen: React.FC = () => {
   const { state } = useContext(StoreContext);
   const [songs, dispatch] = useReducer(optionsReducer, { items: [] });
-  const [song, setSong] = useState<string>('');
+  const [track, setTrack] = useState<{ id: string; preview_url: string }>({
+    id: '',
+    preview_url: '',
+  });
 
   const { token } = useSpotifyToken();
 
@@ -38,7 +41,7 @@ const GameScreen: React.FC = () => {
         .then(response => response.json())
         .then(response => {
           dispatch(setItemsAction(convertTrackIntoOption(response)));
-          setSong(response.tracks[getRandomInt(1, 4)].preview_url);
+          setTrack(response.tracks[getRandomInt(1, 4)]);
         });
     }
   }, [token, state.genres]);
@@ -47,13 +50,13 @@ const GameScreen: React.FC = () => {
     <>
       <PageTitle right="Pts: 1">Playing</PageTitle>
 
-      {song && (
+      {track.id && (
         <Song>
-          <AudioPlayer src={song} total={playerDuration} />
+          <AudioPlayer src={track.preview_url} total={playerDuration} />
         </Song>
       )}
 
-      <TrackSelector tracks={songs.items} track="" />
+      <TrackSelector tracks={songs.items} track={track.id} />
       <Button themeStyle="secondary">Reiniciar</Button>
     </>
   );
