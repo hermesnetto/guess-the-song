@@ -43,7 +43,11 @@ const SetupScreen: React.FC = () => {
   };
 
   const handleStartGame = () => {
-    dispatch(setGenresAction(genres.items.filter((g: OptionSelector) => g.selected)));
+    dispatch(
+      setGenresAction(
+        genres.items.filter((g: OptionSelector) => g.selected).map((g: OptionSelector) => g.id)
+      )
+    );
     dispatch(
       setDifficultyAction(difficulties.items.filter((d: OptionSelector) => d.selected)[0].id)
     );

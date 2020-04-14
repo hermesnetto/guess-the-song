@@ -37,7 +37,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, total }) => {
       <ProgressBar>
         <ProgressBarLine style={{ width: `${(played / total) * 100}%` }} />
       </ProgressBar>
-      <audio src={src} ref={audioEl} autoPlay></audio>
+      <audio src={src} ref={audioEl} muted autoPlay></audio>
     </>
   );
 };

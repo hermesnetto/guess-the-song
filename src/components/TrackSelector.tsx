@@ -1,37 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
-import { OptionSelector } from '../types';
+import { SpotifyTrack } from '../types';
+
+import { StoreContext } from '../store';
+import { incrementPointsAction } from '../store/global';
 
 interface TrackSelectorProps {
-  tracks: OptionSelector[];
-  track: string;
+  tracks: SpotifyTrack[];
+  selected: string;
 }
 
-const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks, track }) => {
+const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks, selected }) => {
+  const { dispatch } = useContext(StoreContext);
   const [isChoosen, setIsChoosen] = useState<boolean>(false);
   const [choosenId, setChoosenId] = useState<string>('');
 
   const handleClick = (trackId: string) => {
     setIsChoosen(true);
     setChoosenId(trackId);
+
+    if (trackId === selected) {
+      dispatch(incrementPointsAction());
+    }
   };
 
   return (
     <>
-      <lottie-player
-        src="https://assets8.lottiefiles.com/packages/lf20_CyEC2p.json"
-        background="#38c172"
-        speed="1"
-        style={{ width: '100vw', height: 200, marginLeft: '-30px', marginBottom: 30 }}
-        loop
-        autoplay
-      />
       <StyledList>
-        {tracks.map(({ id, title }) => {
-          const success = isChoosen && id === choosenId && choosenId === track;
-          const error = isChoosen && id === choosenId && choosenId !== track;
-          const played = isChoosen && id !== choosenId && id === track;
+        {tracks.map(({ id, artists, name }) => {
+          const success = isChoosen && id === choosenId && choosenId === selected;
+          const error = isChoosen && id === choosenId && choosenId !== selected;
+          const played = isChoosen && id !== choosenId && id === selected;
 
           return (
             <StyledItem>
@@ -42,7 +42,7 @@ const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks, track }) => {
                 onClick={() => handleClick(id)}
                 key={`track_${id}`}
               >
-                {title}
+                {artists[0].name} - {name}
               </StyledOption>
             </StyledItem>
           );
