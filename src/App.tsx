@@ -9,6 +9,7 @@ import useSpotifyToken from './custom-hooks/useSpotifyToken';
 import { switchGameStateAction } from './store/global';
 import { StoreContext } from './store';
 import { GameStates } from './store/global';
+import Footer from './components/Footer';
 
 const isSetupPage = (gameState: GameStates): boolean => gameState === 'SETTING_UP';
 const isGamePage = (gameState: GameStates): boolean => gameState === 'PLAYING';
@@ -55,6 +56,7 @@ const App: React.FC = () => {
         <Container>
           {isHomePage(state.gameState) && <Brand />}
           {renderBody()}
+          <Footer />
         </Container>
       </Page>
     </>
@@ -73,6 +75,8 @@ const Container = styled.div`
   padding: 30px 30px 40px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 `;
 
 export default App;

@@ -19,6 +19,7 @@ const StyledBrand = styled.h1<BrandProps>`
     !props.small &&
     css`
       margin-top: 60px;
+      margin-bottom: 0;
     `};
 
   ${props =>
