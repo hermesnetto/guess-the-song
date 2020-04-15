@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/guess-the-song/static/css/main.032d73cf.chunk.css",
-    "main.js": "/guess-the-song/static/js/main.65c47b7e.chunk.js",
-    "main.js.map": "/guess-the-song/static/js/main.65c47b7e.chunk.js.map",
+    "main.css": "/guess-the-song/static/css/main.6d04b2c1.chunk.css",
+    "main.js": "/guess-the-song/static/js/main.783c6bb1.chunk.js",
+    "main.js.map": "/guess-the-song/static/js/main.783c6bb1.chunk.js.map",
     "runtime-main.js": "/guess-the-song/static/js/runtime-main.28af7aba.js",
     "runtime-main.js.map": "/guess-the-song/static/js/runtime-main.28af7aba.js.map",
-    "static/js/2.178be644.chunk.js": "/guess-the-song/static/js/2.178be644.chunk.js",
-    "static/js/2.178be644.chunk.js.map": "/guess-the-song/static/js/2.178be644.chunk.js.map",
+    "static/js/2.9d0c9812.chunk.js": "/guess-the-song/static/js/2.9d0c9812.chunk.js",
+    "static/js/2.9d0c9812.chunk.js.map": "/guess-the-song/static/js/2.9d0c9812.chunk.js.map",
     "index.html": "/guess-the-song/index.html",
-    "precache-manifest.54cf7c2e3b3cac4597adebefe04e1bc8.js": "/guess-the-song/precache-manifest.54cf7c2e3b3cac4597adebefe04e1bc8.js",
+    "precache-manifest.8892083d2478210a2aa9321db2ff2902.js": "/guess-the-song/precache-manifest.8892083d2478210a2aa9321db2ff2902.js",
     "service-worker.js": "/guess-the-song/service-worker.js",
-    "static/css/main.032d73cf.chunk.css.map": "/guess-the-song/static/css/main.032d73cf.chunk.css.map",
-    "static/js/2.178be644.chunk.js.LICENSE.txt": "/guess-the-song/static/js/2.178be644.chunk.js.LICENSE.txt"
+    "static/css/main.6d04b2c1.chunk.css.map": "/guess-the-song/static/css/main.6d04b2c1.chunk.css.map",
+    "static/js/2.9d0c9812.chunk.js.LICENSE.txt": "/guess-the-song/static/js/2.9d0c9812.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.28af7aba.js",
-    "static/js/2.178be644.chunk.js",
-    "static/css/main.032d73cf.chunk.css",
-    "static/js/main.65c47b7e.chunk.js"
+    "static/js/2.9d0c9812.chunk.js",
+    "static/css/main.6d04b2c1.chunk.css",
+    "static/js/main.783c6bb1.chunk.js"
   ]
 }
