@@ -14,7 +14,7 @@ const isSetupPage = (gameState: GameStates): boolean => gameState === 'SETTING_U
 const isGamePage = (gameState: GameStates): boolean => gameState === 'PLAYING';
 const isHomePage = (gameState: GameStates): boolean => gameState === 'INIT';
 
-const App: React.FC = ({ children }) => {
+const App: React.FC = () => {
   const { dispatch } = useContext(StoreContext);
 
   const {

@@ -90,19 +90,19 @@ const StyledOption = styled.button<{ success?: boolean; error?: boolean; played?
   ${props =>
     props.success &&
     css`
-      color: #38c172;
+      color: var(--green-color);
     `}
   
   ${props =>
     props.error &&
     css`
-      color: red;
+      color: var(--red-color);
     `}
 
   ${props =>
     props.played &&
     css`
-      color: #38c172;
+      color: var(--green-color);
     `}
 
   &:disabled:hover {

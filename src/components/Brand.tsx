@@ -11,7 +11,7 @@ const Brand: React.FC<BrandProps> = ({ small }) => {
 
 const StyledBrand = styled.h1<BrandProps>`
   font-family: 'Special Elite', cursive;
-  color: ${props => props.theme.colors.chineseViolet};
+  color: var(--orange-color);
   font-size: ${props => (props.small ? '26px' : '82px')};
   font-weight: bold;
 

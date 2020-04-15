@@ -21,6 +21,23 @@ const emptyTrack: SpotifyTrack = {
 
 const spotifyUrl = 'https://api.spotify.com/v1/recommendations';
 
+const getSelectedTrack = (
+  tracks: SpotifyTrack[],
+  index: number,
+  calls: number,
+  limit: number
+): SpotifyTrack => {
+  if (calls === limit) {
+    return tracks[0];
+  }
+
+  if (tracks[index].preview_url) {
+    return tracks[index];
+  }
+
+  return getSelectedTrack(tracks, getRandomInt(0, 4), calls + 1, limit);
+};
+
 const useFetchTracks = (token: string | null, genres: string[], limit: number = 4): Response => {
   const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
   const [selected, setSelected] = useState<SpotifyTrack>(emptyTrack);
@@ -54,8 +71,8 @@ const useFetchTracks = (token: string | null, genres: string[], limit: number = 
     });
     const { tracks } = (await response.json()) as { tracks: SpotifyTrack[] };
 
-    setSelected(tracks[getRandomInt(1, 4)]);
     setTracks(tracks);
+    setSelected(getSelectedTrack(tracks, getRandomInt(0, 4), 1, limit));
   }, [genres, limit, token]);
 
   const fetchMoreTracks = () => {

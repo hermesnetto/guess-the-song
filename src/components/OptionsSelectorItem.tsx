@@ -61,7 +61,7 @@ const Item = styled.button<ItemProps>`
   ${props =>
     props.selected &&
     css`
-      background: #3f96e4;
+      background: var(--blue-color);
       color: #fff;
       font-weight: bold;
     `}
@@ -69,8 +69,8 @@ const Item = styled.button<ItemProps>`
   ${props =>
     !props.selected &&
     css`
-      border: 1px solid #333;
-      color: #333;
+      border: 1px solid var(--grey-color);
+      color: var(--grey-color);
       background: transparent;
     `}
 `;

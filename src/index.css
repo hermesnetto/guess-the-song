@@ -1,3 +1,13 @@
+:root {
+  --green-color: #38c172;
+  --green-dark-color: #399e64;
+  --yellow-color: #fff07c;
+  --blue-color: #3f96e4;
+  --grey-color: #333;
+  --red-color: #f04a4a;
+  --orange-color: #856088;
+}
+
 * {
   box-sizing: border-box;
 }
