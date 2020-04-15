@@ -7,10 +7,10 @@ const Footer: React.FC = () => {
       <StyledText>Created by: Hermes Netto</StyledText>
       <StyledText>
         <a
-          href="http://github.com/guess-the-game"
+          href="https://github.com/hermesnetto/guess-the-song"
           title="Link to the Github repository of the project"
         >
-          http://github.com/guess-the-game
+          https://github.com/hermesnetto/guess-the-song
         </a>
       </StyledText>
     </StyledWrapper>
@@ -19,6 +19,7 @@ const Footer: React.FC = () => {
 
 const StyledWrapper = styled.div`
   margin-top: 40px;
+  padding-bottom: 20px;
 `;
 
 const StyledText = styled.p`
