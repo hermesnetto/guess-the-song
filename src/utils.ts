@@ -19,3 +19,10 @@ export const convertTrackIntoOption = (response: { tracks: Track[] }): OptionSel
     selected: false,
   }));
 };
+
+export const buildUrlParams = (params: any[][]): string => {
+  return params.reduce((acc, [key, value]) => {
+    if (!acc) return `${key}=${value}`;
+    return `${acc}&${key}=${value}`;
+  }, '');
+};

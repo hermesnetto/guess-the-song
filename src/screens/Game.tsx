@@ -1,24 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
 import AudioPlayer from '../components/AudioPlayer';
 import useSpotifyToken from '../custom-hooks/useSpotifyToken';
+import useSpotifySignIn from '../custom-hooks/useSpotifySignIn';
 import { StoreContext } from '../store';
 import TrackSelector from '../components/TrackSelector';
 import PageTitle from '../components/PageTitle';
 import useFetchTracks from '../custom-hooks/useFetchTracks';
 
 const GameScreen: React.FC = () => {
-  const { state } = useContext(StoreContext);
-  const { token } = useSpotifyToken();
-  const { tracks, selected, fetchMoreTracks } = useFetchTracks(token, state.genres);
+  const { state: store } = useContext(StoreContext);
+  const { token, actions } = useSpotifyToken();
+  const signIn = useSpotifySignIn();
+  const { state, tracks, selected, fetchMoreTracks } = useFetchTracks(token, store.genres);
+
+  useEffect(() => {
+    if (state === 'error') {
+      actions.saveToken('');
+      signIn();
+    }
+  }, [state, actions, signIn]);
 
   return (
     <>
-      <PageTitle right={`Pts: ${state.points}`}>Playing: </PageTitle>
+      <PageTitle right={`Pts: ${store.points}`}>Playing: </PageTitle>
       {selected.id && (
-        <AudioPlayer src={selected.preview_url} total={parseInt(state.difficulty, 10)} />
+        <AudioPlayer src={selected.preview_url} total={parseInt(store.difficulty, 10)} />
       )}
       <TrackSelector tracks={tracks} selected={selected.id} />
       <StyledBtnGroup>

@@ -1,12 +1,23 @@
 import { useEffect, useState, useCallback } from 'react';
 
-import { getRandomInt, getRandomFloat } from '../utils';
+import { getRandomInt, getRandomFloat, buildUrlParams } from '../utils';
 import { SpotifyTrack } from '../types';
 
+type State = 'iddle' | 'started' | 'success' | 'error';
+
 interface Response {
+  state: State;
   tracks: SpotifyTrack[];
   selected: SpotifyTrack;
   fetchMoreTracks: () => void;
+}
+
+interface HttpResponse {
+  tracks: SpotifyTrack[];
+  error?: {
+    status: number;
+    messaged: string;
+  };
 }
 
 const emptyTrack: SpotifyTrack = {
@@ -39,12 +50,14 @@ const getSelectedTrack = (
 };
 
 const useFetchTracks = (token: string | null, genres: string[], limit: number = 4): Response => {
+  const [state, setState] = useState<State>('iddle');
   const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
   const [selected, setSelected] = useState<SpotifyTrack>(emptyTrack);
 
   const fetchAndSetTracks = useCallback(async () => {
     if (!token) return;
 
+    setState('started');
     setTracks([]);
 
     const paramsArr = [
@@ -56,12 +69,7 @@ const useFetchTracks = (token: string | null, genres: string[], limit: number = 
       ['min_instrumentalness', getRandomFloat(0.0, 0.5)],
       ['min_valence', getRandomFloat(0.0, 0.5)],
     ];
-
-    const params = paramsArr.reduce((acc, [key, value]) => {
-      if (!acc) return `${key}=${value}`;
-      return `${acc}&${key}=${value}`;
-    }, '');
-
+    const params = buildUrlParams(paramsArr);
     const response = await fetch(`${spotifyUrl}?${params}`, {
       method: 'GET',
       headers: new Headers({
@@ -69,10 +77,15 @@ const useFetchTracks = (token: string | null, genres: string[], limit: number = 
         'Content-Type': 'application/json',
       }),
     });
-    const { tracks } = (await response.json()) as { tracks: SpotifyTrack[] };
+    const data = (await response.json()) as HttpResponse;
 
-    setTracks(tracks);
-    setSelected(getSelectedTrack(tracks, getRandomInt(0, 4), 1, limit));
+    if (!data.error) {
+      setState('success');
+      setTracks(data.tracks);
+      setSelected(getSelectedTrack(data.tracks, getRandomInt(0, 4), 1, limit));
+    } else {
+      setState('error');
+    }
   }, [genres, limit, token]);
 
   const fetchMoreTracks = () => {
@@ -83,7 +96,7 @@ const useFetchTracks = (token: string | null, genres: string[], limit: number = 
     fetchAndSetTracks();
   }, [fetchAndSetTracks]);
 
-  return { tracks, selected, fetchMoreTracks };
+  return { state, tracks, selected, fetchMoreTracks };
 };
 
 export default useFetchTracks;
