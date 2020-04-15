@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, Dispatch, useContext } from 'react';
 
 import Button from '../components/Button';
 import OptionsSelector from '../components/OptionsSelector';
-import optionsReducer, { Action, setItemsAction, toggleItemAction } from '../store/reducer/options';
+import optionsReducer, { Action, setItemsAction, toggleItemAction } from '../store/options';
 import useSpotifyToken from '../custom-hooks/useSpotifyToken';
 import { GENRES } from '../constants';
 import { setGenresAction, setDifficultyAction, switchGameStateAction } from '../store/global';

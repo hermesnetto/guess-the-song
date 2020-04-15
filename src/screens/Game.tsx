@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import Button from '../components/Button';
@@ -7,7 +7,6 @@ import useSpotifyToken from '../custom-hooks/useSpotifyToken';
 import { StoreContext } from '../store';
 import TrackSelector from '../components/TrackSelector';
 import PageTitle from '../components/PageTitle';
-import PlayerAnimation from '../components/PlayerAnimation';
 import useFetchTracks from '../custom-hooks/useFetchTracks';
 
 const GameScreen: React.FC = () => {
@@ -21,10 +20,8 @@ const GameScreen: React.FC = () => {
       {selected.id && (
         <AudioPlayer src={selected.preview_url} total={parseInt(state.difficulty, 10)} />
       )}
-      <PlayerAnimation />
       <TrackSelector tracks={tracks} selected={selected.id} />
       <StyledBtnGroup>
-        <Button themeStyle="secondary">Reiniciar</Button>
         <Button onClick={fetchMoreTracks}>Next Track</Button>
       </StyledBtnGroup>
     </>

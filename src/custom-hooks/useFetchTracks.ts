@@ -18,9 +18,10 @@ const emptyTrack: SpotifyTrack = {
   artists: [],
   preview_url: '',
 };
+
 const spotifyUrl = 'https://api.spotify.com/v1/recommendations';
 
-function useFetchTracks(token: string | null, genres: string[], limit: number = 4): Response {
+const useFetchTracks = (token: string | null, genres: string[], limit: number = 4): Response => {
   const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
   const [selected, setSelected] = useState<SpotifyTrack>(emptyTrack);
 
@@ -66,6 +67,6 @@ function useFetchTracks(token: string | null, genres: string[], limit: number = 
   }, [fetchAndSetTracks]);
 
   return { tracks, selected, fetchMoreTracks };
-}
+};
 
 export default useFetchTracks;

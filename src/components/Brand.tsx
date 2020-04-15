@@ -14,7 +14,12 @@ const StyledBrand = styled.h1<BrandProps>`
   color: ${props => props.theme.colors.chineseViolet};
   font-size: ${props => (props.small ? '26px' : '82px')};
   font-weight: bold;
-  margin-top: ${props => (props.small ? '30px' : '80px')};
+
+  ${props =>
+    !props.small &&
+    css`
+      margin-top: 60px;
+    `};
 
   ${props =>
     props.small &&

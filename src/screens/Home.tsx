@@ -7,7 +7,10 @@ import { StoreContext } from '../store';
 
 const spotifyAuthEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = 'd9d505e880594b7ca174cf7feeb525ea';
-const redirectUri = 'http://localhost:4000/';
+const redirectUri =
+  process.env.NODE_ENV === 'production'
+    ? 'https://hermesnetto.github.io/guess-the-song/'
+    : 'http://localhost:4000/';
 const scopes = ['user-top-read'];
 
 const HomeScreen: React.FC = () => {

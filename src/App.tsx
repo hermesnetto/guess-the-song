@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Brand from './components/Brand';
 import GameScreen from './screens/Game';
@@ -10,17 +10,9 @@ import { switchGameStateAction } from './store/global';
 import { StoreContext } from './store';
 import { GameStates } from './store/global';
 
-function isSetupPage(gameState: GameStates): boolean {
-  return gameState === 'SETTING_UP';
-}
-
-function isGamePage(gameState: GameStates): boolean {
-  return gameState === 'PLAYING';
-}
-
-function isHomePage(gameState: GameStates): boolean {
-  return gameState === 'INIT';
-}
+const isSetupPage = (gameState: GameStates): boolean => gameState === 'SETTING_UP';
+const isGamePage = (gameState: GameStates): boolean => gameState === 'PLAYING';
+const isHomePage = (gameState: GameStates): boolean => gameState === 'INIT';
 
 const App: React.FC = ({ children }) => {
   const { dispatch } = useContext(StoreContext);
@@ -51,19 +43,17 @@ const App: React.FC = ({ children }) => {
 
   const { state } = useContext(StoreContext);
 
-  function renderBody() {
+  const renderBody = () => {
     if (isGamePage(state.gameState)) return <GameScreen />;
     if (isSetupPage(state.gameState)) return <SetupScreen />;
     return <HomeScreen />;
-  }
-
-  const isHome = isHomePage(state.gameState);
+  };
 
   return (
     <>
       <Page>
-        <Container spaceTop={!isHome}>
-          {isHome && <Brand />}
+        <Container>
+          {isHomePage(state.gameState) && <Brand />}
           {renderBody()}
         </Container>
       </Page>
@@ -76,19 +66,13 @@ const Page = styled.div`
   height: 100vh;
 `;
 
-const Container = styled.div<{ spaceTop: boolean }>`
+const Container = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 30px 30px 40px;
   display: flex;
   flex-direction: column;
-
-  ${props =>
-    props.spaceTop &&
-    css`
-      margin-top: 20px;
-    `}
 `;
 
 export default App;

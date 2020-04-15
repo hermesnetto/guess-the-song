@@ -39,29 +39,38 @@ interface IncrementPointsAction {
   type: 'INCREMENT_POINTS';
 }
 
+interface ClearPointsAction {
+  type: 'CLEAR_POINTS';
+}
+
 export type Action =
   | SetGenresAction
   | SetDifficultyAction
   | SwitchGameStateAction
-  | IncrementPointsAction;
+  | IncrementPointsAction
+  | ClearPointsAction;
 
-function isSwitchGameState(action: Action): action is SwitchGameStateAction {
+const isSwitchGameState = (action: Action): action is SwitchGameStateAction => {
   return action.type === 'SWITCH_GAME_STATE';
-}
+};
 
-function isSetGenresAction(action: Action): action is SetGenresAction {
+const isSetGenresAction = (action: Action): action is SetGenresAction => {
   return action.type === 'SET_GENRES';
-}
+};
 
-function isSetDifficultyAction(action: Action): action is SetDifficultyAction {
+const isSetDifficultyAction = (action: Action): action is SetDifficultyAction => {
   return action.type === 'SET_DIFFICULTY';
-}
+};
 
-function isIncrementPointsAction(action: Action): action is IncrementPointsAction {
+const isIncrementPointsAction = (action: Action): action is IncrementPointsAction => {
   return action.type === 'INCREMENT_POINTS';
-}
+};
 
-function globalReducer(state: State = initialState, action: Action) {
+const isClearPointsAction = (action: Action): action is ClearPointsAction => {
+  return action.type === 'CLEAR_POINTS';
+};
+
+const globalReducer = (state: State = initialState, action: Action) => {
   if (isSwitchGameState(action)) {
     return { ...state, gameState: action.payload.nextState };
   }
@@ -78,34 +87,34 @@ function globalReducer(state: State = initialState, action: Action) {
     return { ...state, points: state.points + 1 };
   }
 
+  if (isClearPointsAction(action)) {
+    return { ...state, points: 0 };
+  }
+
   return state;
-}
+};
 
-export function switchGameStateAction(nextState: GameStates): SwitchGameStateAction {
-  return {
-    type: 'SWITCH_GAME_STATE',
-    payload: { nextState },
-  };
-}
+export const switchGameStateAction = (nextState: GameStates): SwitchGameStateAction => ({
+  type: 'SWITCH_GAME_STATE',
+  payload: { nextState },
+});
 
-export function setGenresAction(genres: string[]): SetGenresAction {
-  return {
-    type: 'SET_GENRES',
-    payload: { genres },
-  };
-}
+export const setGenresAction = (genres: string[]): SetGenresAction => ({
+  type: 'SET_GENRES',
+  payload: { genres },
+});
 
-export function setDifficultyAction(difficulty: string): SetDifficultyAction {
-  return {
-    type: 'SET_DIFFICULTY',
-    payload: { difficulty },
-  };
-}
+export const setDifficultyAction = (difficulty: string): SetDifficultyAction => ({
+  type: 'SET_DIFFICULTY',
+  payload: { difficulty },
+});
 
-export function incrementPointsAction(): IncrementPointsAction {
-  return {
-    type: 'INCREMENT_POINTS',
-  };
-}
+export const incrementPointsAction = (): IncrementPointsAction => ({
+  type: 'INCREMENT_POINTS',
+});
+
+export const clearPointsAction = (): ClearPointsAction => ({
+  type: 'CLEAR_POINTS',
+});
 
 export default globalReducer;

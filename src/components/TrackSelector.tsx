@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { SpotifyTrack } from '../types';
 
 import { StoreContext } from '../store';
-import { incrementPointsAction } from '../store/global';
+import { incrementPointsAction, clearPointsAction } from '../store/global';
 
 interface TrackSelectorProps {
   tracks: SpotifyTrack[];
@@ -28,7 +28,7 @@ const TrackSelector: React.FC<TrackSelectorProps> = ({ tracks, selected }) => {
     if (trackId === selected) {
       dispatch(incrementPointsAction());
     } else {
-      // Clear points
+      dispatch(clearPointsAction());
     }
   };
 

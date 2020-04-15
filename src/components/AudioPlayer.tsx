@@ -52,7 +52,7 @@ const ProgressBar = styled.div`
   border: 1px solid #444;
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 15px;
+  margin-bottom: 40px;
 `;
 
 const ProgressBarLine = styled.div`

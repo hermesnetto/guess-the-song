@@ -1,4 +1,4 @@
-import { OptionSelector } from '../../types';
+import { OptionSelector } from '../types';
 
 export const SET_ITEMS = 'options/SET-ITEMS';
 export const TOGGLE_ITEM = 'options/TOGGLE-ITEM';
@@ -24,15 +24,15 @@ interface ToggleItemAction {
 
 export type Action = SetItemsAction | ToggleItemAction;
 
-function isSetItemsAction(action: Action): action is SetItemsAction {
+const isSetItemsAction = (action: Action): action is SetItemsAction => {
   return action.type === SET_ITEMS;
-}
+};
 
-function isToggleItemAction(action: Action): action is ToggleItemAction {
+const isToggleItemAction = (action: Action): action is ToggleItemAction => {
   return action.type === TOGGLE_ITEM;
-}
+};
 
-function optionsReducer(state: State, action: Action) {
+const optionsReducer = (state: State, action: Action): State => {
   if (isSetItemsAction(action)) {
     return {
       items: action.payload.items,
@@ -62,25 +62,21 @@ function optionsReducer(state: State, action: Action) {
   }
 
   return state;
-}
+};
 
-export function setItemsAction(items: OptionSelector[]): SetItemsAction {
-  return {
-    type: SET_ITEMS,
-    payload: {
-      items,
-    },
-  };
-}
+export const setItemsAction = (items: OptionSelector[]): SetItemsAction => ({
+  type: SET_ITEMS,
+  payload: {
+    items,
+  },
+});
 
-export function toggleItemAction(id: string, multiple?: boolean): ToggleItemAction {
-  return {
-    type: TOGGLE_ITEM,
-    payload: {
-      id,
-      multiple,
-    },
-  };
-}
+export const toggleItemAction = (id: string, multiple?: boolean): ToggleItemAction => ({
+  type: TOGGLE_ITEM,
+  payload: {
+    id,
+    multiple,
+  },
+});
 
 export default optionsReducer;
