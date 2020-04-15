@@ -18,6 +18,11 @@ const Button = styled.button<ButtonProps>`
   border-color: var(--green-dark-color);
   color: #fff;
 
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+
   ${props => {
     switch (props.size) {
       case 'sm':

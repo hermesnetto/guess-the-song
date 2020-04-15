@@ -10,7 +10,7 @@ import { StoreContext } from '../store';
 import { OptionSelector } from '../types';
 
 const SetupScreen: React.FC = () => {
-  const { dispatch } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
   const [genres, dispatchGenres] = useReducer(optionsReducer, { items: [] });
   const [difficulties, dispatchDifficulties] = useReducer(optionsReducer, { items: [] });
   const { token } = useSpotifyToken();
@@ -55,10 +55,15 @@ const SetupScreen: React.FC = () => {
     dispatch(switchGameStateAction('PLAYING'));
   };
 
+  const hasGenresSelected = genres.items.filter(i => i.selected).length > 0;
+  const difSelected = difficulties.items.filter(i => i.selected);
+  const sec = difSelected.length > 0 ? difSelected[0].id : state.difficulty;
+
   return (
     <>
       <OptionsSelector
         title="Select the genres you want to guess"
+        subtitle="Select up to 3 genres"
         options={genres.items}
         toggleItem={handleToggleItem(dispatchGenres)}
         limit={3}
@@ -66,10 +71,13 @@ const SetupScreen: React.FC = () => {
       />
       <OptionsSelector
         title="Select the difficulty"
+        subtitle={`The song will play for ${sec} seconds`}
         toggleItem={handleToggleItem(dispatchDifficulties)}
         options={difficulties.items}
       />
-      <Button onClick={handleStartGame}>Start Game</Button>
+      <Button onClick={handleStartGame} disabled={!hasGenresSelected}>
+        Start Game
+      </Button>
     </>
   );
 };

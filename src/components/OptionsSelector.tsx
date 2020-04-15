@@ -7,6 +7,7 @@ import PageTitle from './PageTitle';
 
 interface OptionsSelectorProps {
   title: string;
+  subtitle?: string;
   options: OptionSelector[];
   multiple?: boolean;
   fullWidth?: boolean;
@@ -16,6 +17,7 @@ interface OptionsSelectorProps {
 
 const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   title,
+  subtitle,
   options,
   toggleItem,
   multiple,
@@ -25,9 +27,10 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   const totalSelected = options.filter((item: OptionSelector) => item.selected).length;
 
   return (
-    <Wrapper>
+    <StyledWrapper>
       <PageTitle>{title}</PageTitle>
-      <List>
+      {subtitle && <StyledSubtitle>{subtitle}</StyledSubtitle>}
+      <StyledList>
         {options.map(option => (
           <OptionsSelectorItem
             key={option.id}
@@ -39,8 +42,8 @@ const OptionsSelector: React.FC<OptionsSelectorProps> = ({
             {...option}
           />
         ))}
-      </List>
-    </Wrapper>
+      </StyledList>
+    </StyledWrapper>
   );
 };
 
@@ -49,11 +52,16 @@ OptionsSelector.defaultProps = {
   fullWidth: false,
 };
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   margin-bottom: 40px;
 `;
 
-const List = styled.div`
+const StyledSubtitle = styled.h3`
+  font-weight: 400;
+  color: #333;
+`;
+
+const StyledList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: -5px;
