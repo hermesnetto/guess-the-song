@@ -11,7 +11,7 @@ interface ButtonProps {
 
 const Button = styled.button<ButtonProps>`
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   text-decoration: none;
   text-align: center;
   border-radius:5px;

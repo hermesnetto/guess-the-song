@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 
-import { getRandomInt } from '../utils';
+import { getRandomInt, getRandomFloat } from '../utils';
 import { SpotifyTrack } from '../types';
 
 interface Response {
@@ -12,6 +12,9 @@ interface Response {
 const emptyTrack: SpotifyTrack = {
   id: '',
   name: '',
+  album: {
+    images: [],
+  },
   artists: [],
   preview_url: '',
 };
@@ -24,19 +27,30 @@ function useFetchTracks(token: string | null, genres: string[], limit: number = 
   const fetchAndSetTracks = useCallback(async () => {
     if (!token) return;
 
-    const genresStr = genres.join(',');
     setTracks([]);
 
-    const response = await fetch(
-      `${spotifyUrl}?limit=${limit}&seed_genres=${genresStr}&min_popularity=60&max_popularity=100&target_popularity=100`,
-      {
-        method: 'GET',
-        headers: new Headers({
-          Authorization: `Bearer ${token || ''}`,
-          'Content-Type': 'application/json',
-        }),
-      }
-    );
+    const paramsArr = [
+      ['limit', limit],
+      ['seed_genres', genres.join(',')],
+      ['min_acousticness', getRandomFloat(0.0, 0.5)],
+      ['min_danceability', getRandomFloat(0.0, 0.5)],
+      ['min_energy', getRandomFloat(0.0, 0.5)],
+      ['min_instrumentalness', getRandomFloat(0.0, 0.5)],
+      ['min_valence', getRandomFloat(0.0, 0.5)],
+    ];
+
+    const params = paramsArr.reduce((acc, [key, value]) => {
+      if (!acc) return `${key}=${value}`;
+      return `${acc}&${key}=${value}`;
+    }, '');
+
+    const response = await fetch(`${spotifyUrl}?${params}`, {
+      method: 'GET',
+      headers: new Headers({
+        Authorization: `Bearer ${token || ''}`,
+        'Content-Type': 'application/json',
+      }),
+    });
     const { tracks } = (await response.json()) as { tracks: SpotifyTrack[] };
 
     setSelected(tracks[getRandomInt(1, 4)]);

@@ -12,11 +12,22 @@ export interface Track {
   name: string;
 }
 
+export interface SpotifyTrackAlbumImage {
+  height: number;
+  url: string;
+  width: number;
+}
+
+export interface SpotifyTrackArtists {
+  name: string;
+}
+
 export interface SpotifyTrack {
   id: string;
   name: string;
-  artists: {
-    name: string;
-  }[];
+  album: {
+    images: SpotifyTrackAlbumImage[];
+  };
+  artists: SpotifyTrackArtists[];
   preview_url: string;
 }

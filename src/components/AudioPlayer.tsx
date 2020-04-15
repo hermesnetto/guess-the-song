@@ -13,6 +13,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, total }) => {
   const audioEl = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    setPlayed(0);
+  }, [src]);
+
+  useEffect(() => {
     if (played === total) {
       if (audioEl.current) {
         audioEl.current.pause();
@@ -30,14 +34,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, total }) => {
         setPlayed(Math.ceil(audioEl.current.currentTime));
       }
     }, 10);
-  }, [total]);
+  }, [src]);
 
   return (
     <>
       <ProgressBar>
         <ProgressBarLine style={{ width: `${(played / total) * 100}%` }} />
       </ProgressBar>
-      <audio src={src} ref={audioEl} muted autoPlay></audio>
+      <audio src={src} ref={audioEl} autoPlay />
     </>
   );
 };
@@ -48,6 +52,7 @@ const ProgressBar = styled.div`
   border: 1px solid #444;
   border-radius: 10px;
   overflow: hidden;
+  margin-bottom: 15px;
 `;
 
 const ProgressBarLine = styled.div`
